@@ -1,0 +1,19 @@
+*.log
+local_settings.py
+db.sqlite3
+
+
+# pyenv
+.python-version
+
+# Environments
+.env
+../.venv
+
+
+# VSCode
+.vscode/
+
+# Editor files
+.idea/
+
