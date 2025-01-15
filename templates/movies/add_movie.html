@@ -1,0 +1,133 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Add Movie{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/add_movie.css' %}">
+<div class="movie-container">
+    <h2 class="movie-form-title">
+        {% if edit_mode %}Edit Movie{% else %}Add New Movie to Movie Verse{% endif %}
+    </h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="movie-grid">
+            <!-- Title -->
+            <div class="movie-group">
+                <label for="title">Title (required)</label>
+                <input type="text" id="title" name="title" placeholder="Enter movie title"
+                       value="{{ pre_filled_data.title|default:'' }}" required>
+            </div>
+
+            <!-- Description -->
+            <div class="movie-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Enter movie description">{{ pre_filled_data.description|default:'' }}</textarea>
+            </div>
+
+            <!-- Release Date -->
+            <div class="movie-group">
+                <label for="release_date">Release Date (required)</label>
+                <input type="date" id="release_date" name="release_date"
+                       value="{{ pre_filled_data.release_date|default:'' }}" required>
+            </div>
+
+            <!-- Poster -->
+            <div class="movie-group">
+                <label for="poster">Poster</label>
+                <input type="file" id="poster" name="poster" accept="image/*">
+            </div>
+
+            <!-- Rating -->
+            <div class="movie-group">
+                <label for="rating">Rating (1-5)</label>
+                <input type="number" id="rating" name="rating" min="1" max="5"
+                       value="{{ pre_filled_data.rating|default:'' }}">
+            </div>
+
+            <!-- Director -->
+            <div class="movie-group">
+                <label for="director">Director (required)</label>
+                {% if directors %}
+                <select id="director" name="director" required>
+                    {% for director in directors %}
+                    {% if director.id|stringformat:"s" == pre_filled_data.director|stringformat:"s" %}
+                    <option value="{{ director.id }}" selected>
+                        {{ director.first_name }} {{ director.last_name }}
+                    </option>
+                    {% else %}
+                    <option value="{{ director.id }}">
+                        {{ director.first_name }} {{ director.last_name }}
+                    </option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <small class="director-small">
+                    Don't see the director you're looking for?
+                    <a href="#" class="add-director-link"
+                       data-is-edit-mode="{{ edit_mode|yesno:'true,false' }}"
+                       data-movie-id="{{ pre_filled_data.movie_id|default:'' }}"
+                       onclick="redirectToAddDirector()">Add a new director</a>
+                </small>
+
+                <script>
+                    function redirectToAddDirector() {
+                        const title = document.getElementById('title').value;
+                        const description = document.getElementById('description').value;
+                        const release_date = document.getElementById('release_date').value;
+                        const rating = document.getElementById('rating').value;
+                        const genres = Array.from(document.getElementById('genres').selectedOptions).map(opt => opt.value).join(',');
+                        const director = document.getElementById('director').value;
+                        const is_edit_mode = document.querySelector('.add-director-link').getAttribute('data-is-edit-mode');
+                        const movie_id = document.querySelector('.add-director-link').getAttribute('data-movie-id');
+                        const url = `{% url 'add_director' %}?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}&release_date=${encodeURIComponent(release_date)}&rating=${encodeURIComponent(rating)}&genres=${encodeURIComponent(genres)}&director=${encodeURIComponent(director)}&edit_mode=${encodeURIComponent(is_edit_mode)}&movie_id=${encodeURIComponent(movie_id)}`;
+                        window.location.href = url;
+                    }
+                </script>
+
+                {% else %}
+                <p class="no-directors-message">
+                    No directors available. Please <a href="{% url 'add_director' %}">add a director</a> first.
+                </p>
+                {% endif %}
+            </div>
+
+            <!-- Genres -->
+            <div class="movie-group">
+                <label for="genres">Genres (required)</label>
+                <select id="genres" name="genres" multiple required>
+                    {% for value, label in genres %}
+                    <option value="{{ value }}"
+                            {% if value in pre_filled_data.genres %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <small class="genres-small">Hold Ctrl (or Cmd on Mac) to select multiple genres.</small>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        {% if error %}
+        <p style="color: red; text-align: center; margin-bottom: 15px;">{{ error }}</p>
+        {% endif %}
+
+        <div class="movie-form-actions">
+            <!-- Cancel Button -->
+            {% if edit_mode %}
+            <a href="{% url 'movie_info' movie_id=pre_filled_data.movie_id %}" class="cancel-btn">
+                Cancel
+            </a>
+            {% else %}
+            <a href="javascript:void(0);" class="cancel-btn" onclick="history.back();">
+                Cancel
+            </a>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <button type="submit" class="movie-btn">
+                {% if edit_mode %}Save Changes{% else %}Add Movie{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

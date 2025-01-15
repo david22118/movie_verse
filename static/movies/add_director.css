@@ -1,0 +1,82 @@
+/* Add Director Page Styling */
+
+.add-director-container {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    width: 350px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 50px auto;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.director-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.director-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.director-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.director-group input:focus {
+    border-color: #00b0cc; /* Light blue border for focus */
+    outline: none;
+}
+
+.add-director-btn {
+    background-color: #00b0cc; /* Light blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+    transition: background-color 0.3s ease;
+}
+
+.add-director-btn:hover {
+    background-color: #008da1; /* Slightly darker blue on hover */
+}
+
+.add-director-btn:disabled {
+    background-color: #ccc; /* Grey background for disabled state */
+    cursor: not-allowed;
+}
+
+.cancel-btn {
+    font-weight: bold;
+    color: #444;
+    text-decoration: none !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.actions-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: flex-end;
+    align-items: baseline;
+}

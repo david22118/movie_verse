@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/signup.css' %}">
+<div class="signup-container">
+    <h2>Sign Up</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username (required)</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email (required)</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password (required)</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <div class="form-group">
+            <label for="additional_info">Additional Info</label>
+            <textarea id="additional_info" name="additional_info" placeholder="Enter additional information"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Sign Up</button>
+    </form>
+     <hr class="solid">
+    <div class="login-link">
+        <p>Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+    </div>
+</div>
+{% endblock %}

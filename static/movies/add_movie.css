@@ -1,0 +1,158 @@
+.movie-container {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    width: 800px; /* Increase width for a wider container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    text-align: center;
+}
+
+.movie-form-title {
+    font-size: 24px; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    color: #00b0cc; /* Light blue color */
+    margin-bottom: 38px; /* Add spacing below the title */
+    text-align: center;
+    text-transform: uppercase; /* Make the text uppercase */
+    letter-spacing: 1px; /* Add slight spacing between letters */
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+    gap: 20px; /* Spacing between rows and columns */
+}
+
+.movie-group {
+    text-align: left;
+}
+
+.movie-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.movie-group input,
+.movie-group textarea,
+.movie-group select {
+    color: #555;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.movie-group textarea {
+    resize: vertical;
+    height: 80px;
+}
+
+.movie-group select[multiple] {
+    height: auto;
+    min-height: 100px; /* Ensure enough space for multiple options */
+    background-color: #fff;
+}
+
+.movie-group input:focus,
+.movie-group textarea:focus,
+.movie-group select:focus {
+    border-color: #00b0cc;
+    outline: none;
+}
+
+.movie-btn {
+    background-color: #00b0cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Add spacing above the button */
+}
+
+.movie-btn:hover {
+    background-color: #008da1;
+}
+
+.movie-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.no-directors-message {
+    color: #555;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.no-directors-message a {
+    color: #00b0cc;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.director-small {
+   color: #555;
+   font-size: 14px;
+   margin-top: 20px;
+   padding-left: 1px;
+}
+
+.director-small a {
+    color: #00b0cc;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.genres-small {
+    color: #555;
+    padding-left: 1px;
+}
+
+.back-to-movie-info {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.back-to-movie-info .back-arrow {
+    text-decoration: none;
+   color: #00b0cc; /* Light blue color */
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+    transition: color 0.3s;
+}
+
+.back-to-movie-info .back-arrow:hover {
+    color: #008da1;
+    cursor: pointer;
+}
+
+
+.cancel-btn {
+    font-weight: bold;
+    color: #444; /* Neutral color for Cancel button */
+    text-decoration: none !important;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+
+.movie-form-actions {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    justify-content: end;
+    gap: 20px;
+}

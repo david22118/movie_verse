@@ -1,0 +1,78 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Verse</title>
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% load static %}
+</head>
+<body>
+<!-- Navbar -->
+<div class="navbar">
+    <div class="navbar-container">
+        <h1 class="navbar-title">Movie Verse</h1>
+        <ul class="navbar-links">
+            <li><a href="{% url 'movie_list' %}" class="home-link">Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Movies</a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'movie_list' %}?filter=popular"
+                           class="dropdown-item {% if filter_option == 'popular' %}active{% endif %}">Popular</a></li>
+                    <li><a href="{% url 'movie_list' %}?filter=top_rated"
+                           class="dropdown-item {% if filter_option == 'top_rated' %}active{% endif %}">Top Rated</a>
+                    </li>
+                    <li><a href="{% url 'movie_list' %}?filter=upcoming"
+                           class="dropdown-item {% if filter_option == 'upcoming' %}active{% endif %}">Upcoming</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Genres</a>
+                <ul class="dropdown-menu">
+                    {% for genre in genres %}
+                    <li>
+                        <a href="{% url 'movie_list' %}?genre={{ genre.id }}"
+                           class="dropdown-item {% if selected_genre == genre.id|stringformat:'s' %}active{% endif %}">
+                            {{ genre.get_name_display }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+        </ul>
+
+        {% if user.is_authenticated and user.is_superuser %}
+        <a href="{% url 'add_movie' %}" class="add-movie-button">Add Movie +</a>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="login-button">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="login-button">Login</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-container">
+    <div class="content">
+        {% block content %}
+        <!-- Page-specific content goes here -->
+        {% endblock %}
+    </div>
+</div>
+<!-- Footer -->
+<div class="footer">
+    <p>
+        Copyright © 2024 - Movie Verse<br>
+        Movie Verse - Watch Movies and TV Shows. This is the best page to watch full HD Movies
+        and TV Series online wherever you are.<br>
+        Movie Verse has the largest catalog of movies updated daily.
+    </p>
+</div>
+</body>
+</html>

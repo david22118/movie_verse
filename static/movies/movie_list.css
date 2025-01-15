@@ -1,0 +1,102 @@
+/* Center the grid and align it with the navbar width */
+.movies-wrapper.more-movies {
+    max-width: 1000px; /* Align with the navbar width */
+    margin: 0 auto; /* Center the grid horizontally */
+    padding: 20px; /* Add some padding for spacing */
+}
+.movies-wrapper.three-movies {
+    max-width: 800px;
+    margin: 0 auto; /* Center the grid horizontally */
+    padding: 20px; /* Add some padding for spacing */
+}
+.movies-wrapper.two-movies {
+    max-width: 530px;
+    margin: 0 auto; /* Center the grid horizontally */
+    padding: 20px; /* Add some padding for spacing */
+}
+
+/* Movie Grid Styles */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid for single/multiple movies */
+    gap: 20px; /* Spacing between grid items */
+    justify-content: center; /* Center items horizontally */
+}
+
+/* Movie Card Styles */
+.movie-card {
+    background-color: #1a1a2e; /* Dark blue background */
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 428px; /* Set a fixed height for cards */
+    max-width: 250px; /* Limit card width for single items */
+    margin: 0 auto; /* Center the card inside the grid cell */
+}
+
+.movie-card:hover {
+    transform: translateY(-10px); /* Slight lift on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.movie-poster img {
+    width: 100%; /* Ensure images fit the card */
+    height: 300px; /* Consistent height for all posters */
+    object-fit: cover; /* Maintain aspect ratio and fill */
+}
+
+.movie-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-details {
+    padding: 10px;
+    color: #fff;
+}
+
+.movie-details h3 {
+    margin: 10px 0 5px;
+    font-size: 14px;
+}
+
+.movie-details p {
+    font-size: 14px;
+    color: #ccc;
+}
+.empty-state {
+    text-align: center;
+    margin: 50px auto;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.empty-state h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #ffcc00; /* Highlighted yellow for attention */
+}
+
+.empty-state p {
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.reset-filter-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.reset-filter-btn:hover {
+    background-color: #0056b3;
+}

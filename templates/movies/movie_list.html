@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Movie List{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/movie_list.css' %}">
+<div class="movies-wrapper {% if movies|length == 2 %}two-movies{% elif movies|length == 3 %}three-movies{% else %}more-movies{% endif %}">
+   {% if movies %}
+    <div class="movies-grid">
+        {% for movie in movies %}
+        <a href="{% url 'movie_info' movie.id %}" class="movie-card-link">
+            <div class="movie-card" title="{{ movie.title }}">
+                <div class="movie-poster">
+                    <img src="{{ movie.poster.url }}" alt="{{ movie.title }}">
+                </div>
+                <div class="movie-details">
+                    <h3>{{ movie.title|truncatechars:30 }}</h3>
+                    <p>{{ movie.description|truncatechars:100 }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h2>No Movies Found</h2>
+        <p>We couldn't find any movies for this filter. Try a different filter or reset the search.</p>
+        <a href="{% url 'movie_list' %}" class="reset-filter-btn">Reset Filters</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

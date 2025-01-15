@@ -1,0 +1,102 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/movie_info.css' %}">
+
+<div class="movie-info-container">
+    <div class="movie-poster">
+        <img src="{{ movie.poster.url }}" alt="{{ movie.title }}">
+    </div>
+    <div class="movie-details">
+        <h1>{{ movie.title }}</h1>
+        <h2>{{ movie.description }}</h2>
+        <p><strong>Director:</strong> {{ movie.director }}</p>
+        <p><strong>Genres:</strong> {{ movie.genres.all|join:', ' }}</p>
+        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Rating:</strong> {{ movie.rating }}/5</p>
+    </div>
+    {% if is_superuser %}
+    <div class="movie-info-actions">
+        <a href="{% url 'add_movie' %}?edit_mode=true&movie_id={{ movie.id }}" class="edit-movie-btn">Edit</a>
+        <form method="POST" action="{% url 'delete_movie' movie.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-movie-btn">Delete</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% if movie.comments.all %}
+<div class="comments-container">
+    <ul class="comments-list">
+        {% for comment in movie.comments.all %}
+        <li class="comment-item" id="comment-{{ comment.id }}">
+            <p class="comment-author"><strong>{{ comment.profile.user.username }}</strong></p>
+
+            <!-- Regular Comment View -->
+            <p class="comment-content" id="comment-content-{{ comment.id }}">{{ comment.content }}</p>
+            {% if user.is_authenticated and comment.profile.user == user %}
+            <div class="comment-actions" id="comment-actions-{{ comment.id }}">
+                <button class="edit-comment-btn" onclick="toggleEdit('{{ comment.id }}')">Edit</button>
+                <form method="POST" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-comment-btn">Delete</button>
+                </form>
+            </div>
+            {% endif %}
+
+            <!-- Edit Mode -->
+            <div class="edit-comment-container hidden" id="edit-form-{{ comment.id }}">
+                <form method="POST" action="{% url 'edit_comment' comment.id %}">
+                    {% csrf_token %}
+                    <textarea
+                            name="content"
+                            class="comment-input"
+                            placeholder="Edit your comment..."
+                            required>{{ comment.content }}</textarea>
+                    <div class="edit-comment-actions">
+                        <p class="cancel-edit-btn" onclick="toggleEdit('{{ comment.id }}')">Cancel</p>
+                        <button type="submit" class="edit-comment-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+</div>
+{% if user.is_authenticated and not user.is_superuser %}
+<div class="comment-section">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="comment-input-container">
+            <textarea
+                    name="content"
+                    placeholder="Add a comment..."
+                    class="comment-input"
+                    required></textarea>
+            <button type="submit" class="comment-send-btn">Send</button>
+        </div>
+    </form>
+</div>
+{% endif %}
+<script>
+    function toggleEdit(commentId) {
+        const editForm = document.getElementById(`edit-form-${commentId}`);
+        const commentContent = document.getElementById(`comment-content-${commentId}`);
+        const commentActions = document.getElementById(`comment-actions-${commentId}`);
+
+        if (editForm.classList.contains('hidden')) {
+            editForm.classList.remove('hidden');
+            commentContent.classList.add('hidden');
+            commentActions.classList.add('hidden');
+        } else {
+            editForm.classList.add('hidden');
+            commentContent.classList.remove('hidden');
+            commentActions.classList.remove('hidden');
+        }
+    }
+</script>
+{% endblock %}

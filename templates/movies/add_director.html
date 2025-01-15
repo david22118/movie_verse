@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Add director{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/add_director.css' %}">
+<div class="add-director-container">
+    <h2>Add Director</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="director-group">
+            <label for="first_name">First Name (required)</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter first name" required>
+        </div>
+        <div class="director-group">
+            <label for="last_name">Last Name (required)</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter last name" required>
+        </div>
+        <div class="director-group">
+            <label for="birth_date">Birth Date </label>
+            <input type="date" id="birth_date" name="birth_date" required>
+        </div>
+        <div class="actions-btn">
+            <a href="javascript:void(0);" class="cancel-btn" onclick="history.back();">
+                Cancel
+            </a>
+            <button type="submit" class="add-director-btn">Add Director</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
